@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="EcommercePU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>br.edu.ifpi.Model.Usuario</class>
+        <class>br.edu.ifpi.Model.Administrador</class>
+        <class>br.edu.ifpi.Model.Cliente</class>
+        <class>br.edu.ifpi.Model.Produto</class>
+        <class>br.edu.ifpi.Model.ProdutoDigital</class>
+        <class>br.edu.ifpi.Model.ProdutoFisico</class>
+        <class>br.edu.ifpi.Model.Pedido</class>
+        <class>br.edu.ifpi.Model.ItemPedido</class>
+        <class>br.edu.ifpi.Model.Pagamento</class>
+        <class>br.edu.ifpi.Model.Boleto</class>
+        <class>br.edu.ifpi.Model.Historico</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://ep-square-dawn-ac5n0gbo-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&amp;channel_binding=require"/>
+            <property name="jakarta.persistence.jdbc.user" value="neondb_owner"/>
+            <property name="jakarta.persistence.jdbc.password" value="npg_y69GkqjNguKZ"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <!-- TEMPORÁRIO: create para recriar banco com CPF. Depois mude para update -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
