@@ -1,4 +1,7 @@
 package br.edu.ifpi;
+import br.edu.ifpi.factory.ProdutoFactory;
+import br.edu.ifpi.factory.PagamentoFactory;
+import br.edu.ifpi.factory.FactoryProvider;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -140,17 +143,56 @@ public class Main {
         int opcao = -1;
         
         do {
-            try {
-                System.out.println("\n========== MENU PRINCIPAL ==========");
-                System.out.println("1. Gerenciar Administradores");
-                System.out.println("2. Gerenciar Clientes");
-                System.out.println("3. Gerenciar Produto Digital");
-                System.out.println("4. Gerenciar Produto Físico");
-                System.out.println("5. Gerenciar Pedidos (com Itens)");  // ← MUDANÇA
-                System.out.println("6. Gerenciar Pagamentos");            // ← MUDANÇA: numeração
-                System.out.println("0. Sair");
-                System.out.println("====================================");
-                System.out.print("Escolha uma opção: ");
+            // No método main, modifique o menu para:
+do {
+    try {
+        System.out.println("\n========== MENU PRINCIPAL ==========");
+        System.out.println("1. Gerenciar Administradores");
+        System.out.println("2. Gerenciar Clientes");
+        System.out.println("3. Gerenciar Produto Digital");
+        System.out.println("4. Gerenciar Produto Físico");
+        System.out.println("5. Gerenciar Pedidos (com Itens)");
+        System.out.println("6. Gerenciar Pagamentos");
+        System.out.println("7. Demonstração Factory Method");  // ← NOVA OPÇÃO
+        System.out.println("0. Sair");
+        System.out.println("====================================");
+        System.out.print("Escolha uma opção: ");
+        
+        // ... resto do código ...
+        
+        switch (opcao) {
+            case 1:
+                menuAdministradores(scanner);
+                break;
+            case 2:
+                menuClientes(scanner);
+                break;
+            case 3:
+                menuProdutoDigital(scanner);
+                break;
+            case 4:
+                menuProdutoFisico(scanner);
+                break;
+            case 5:
+                menuPedidos(scanner);
+                break;
+            case 6:
+                menuPagamentos(scanner);
+                break;
+            case 7:  // ← NOVO CASE
+                demonstrarFactoryMethod(scanner);
+                break;
+            case 0:
+                System.out.println("\n👋 Até logo! Encerrando sistema...");
+                break;
+            default:
+                System.out.println("❌ Opção inválida! Digite um número entre 0 e 7.");  // ← Atualize para 7
+        }
+        
+    } catch (Exception e) {
+        // ... tratamento de erro ...
+    }
+} while (opcao != 0);
                 
                 if (!scanner.hasNextInt()) {
                     System.out.println("❌ ERRO: Digite apenas números!");
@@ -1608,6 +1650,48 @@ public class Main {
                         System.out.println("❌ ERRO ao buscar detalhes: " + e.getMessage());
                     }
                     break;
+
+                    private static void demonstrarFactoryMethod(Scanner scanner) {
+                        ProdutoFactory produtoFactory = FactoryProvider.getProdutoFactory();
+                        PagamentoFactory pagamentoFactory = FactoryProvider.getPagamentoFactory();
+                        System.out.println("\n=== DEMONSTRAÇÃO FACTORY METHOD ===");
+                        System.out.println("🏭 Criando produtos e pagamentos usando Factory Pattern");
+    
+                    try {
+                        // Demonstração criação de produtos
+                        System.out.println("\n1. 🎯 CRIANDO PRODUTOS:");
+        
+                         br.edu.ifpi.entities.ProdutoDigital produtoDigital = 
+                            ((br.edu.ifpi.factory.ProdutoFactoryImpl) produtoFactory)
+                                .criarProdutoDigital("Ebook Factory Pattern", 29.90, 
+                                    "Livro sobre padrões de projeto", "https://download.com/ebook-factory.pdf");
+                        System.out.println("   ✅ Produto Digital criado: " + produtoDigital.getNome());
+        
+                         br.edu.ifpi.entities.ProdutoFisico produtoFisico = 
+                            ((br.edu.ifpi.factory.ProdutoFactoryImpl) produtoFactory)
+                                .criarProdutoFisico("Mouse Gamer", 89.90, "Mouse para games", 0.3, 50);
+                        System.out.println("   ✅ Produto Físico criado: " + produtoFisico.getNome());
+        
+        // Demonstração criação de pagamentos
+                        System.out.println("\n2. 💳 CRIANDO PAGAMENTOS:");
+        
+                         br.edu.ifpi.entities.Boleto boleto = 
+                            ((br.edu.ifpi.factory.PagamentoFactoryImpl) pagamentoFactory)
+                                .criarBoletoCompleto("12345.67890 12345.678901 12345.678901 1 000000000000", 
+                                java.time.LocalDate.now().plusDays(7).toString(), 119.80);
+                        System.out.println("   ✅ Boleto criado: " + boleto.getCodigoBoleto());
+        
+                        System.out.println("\n🎉 DEMONSTRAÇÃO CONCLUÍDA COM SUCESSO!");
+                        System.out.println("💡 O Factory Method centraliza a lógica de criação de objetos,");
+                        System.out.println("   tornando o código mais flexível e extensível.");
+        
+                    } catch (Exception e) {
+                System.out.println("❌ Erro na demonstração: " + e.getMessage());
+}           
+    
+    System.out.print("\nPressione Enter para continuar...");
+    scanner.nextLine();
+}
                     
                 case 4: // REMOVER BOLETO
                     try {
